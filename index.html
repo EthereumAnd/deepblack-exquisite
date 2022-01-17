@@ -355,47 +355,47 @@
         </div>
     </div>
     <br/>
-    <div class="container is-fluid box" style="width: 1700px;">
-        <h1 class="title">Recent Sales</h1>
-        <div class="columns is-multiline">
-            <div class="column is-narrow ">
-                <article class="message is-primary card">
-                    <div class="message-header"></div>
-                    <div class="message-body"></div>
-                </article>
-            </div>
-            <div class="column is-narrow ">
-                <article class="message is-primary card">
-                    <div class="message-header "></div>
-                    <div class="message-body"></div>
-                </article>
-            </div>
-            <div class="column is-narrow ">
-                <article class="message is-primary card">
-                    <div class="message-header"></div>
-                    <div class="message-body"></div>
-                </article>
-            </div>
-            <div class="column is-narrow ">
-                <article class="message is-primary card">
-                    <div class="message-header"></div>
-                    <div class="message-body"></div>
-                </article>
-            </div>
-            <div class="column is-narrow ">
-                <article class="message is-primary card">
-                    <div class="message-header"></div>
-                    <div class="message-body"></div>
-                </article>
-            </div>
-            <div class="column is-narrow ">
-                <article class="message is-primary card">
-                    <div class="message-header">test</div>
-                    <div class="message-body">test b</div>
-                </article>
-            </div>
-        </div>
-    </div>
+<!--    <div class="container is-fluid box" style="width: 1700px;">-->
+<!--        <h1 class="title">Recent Sales</h1>-->
+<!--        <div class="columns is-multiline">-->
+<!--            <div class="column is-narrow ">-->
+<!--                <article class="message is-primary card">-->
+<!--                    <div class="message-header"></div>-->
+<!--                    <div class="message-body"></div>-->
+<!--                </article>-->
+<!--            </div>-->
+<!--            <div class="column is-narrow ">-->
+<!--                <article class="message is-primary card">-->
+<!--                    <div class="message-header "></div>-->
+<!--                    <div class="message-body"></div>-->
+<!--                </article>-->
+<!--            </div>-->
+<!--            <div class="column is-narrow ">-->
+<!--                <article class="message is-primary card">-->
+<!--                    <div class="message-header"></div>-->
+<!--                    <div class="message-body"></div>-->
+<!--                </article>-->
+<!--            </div>-->
+<!--            <div class="column is-narrow ">-->
+<!--                <article class="message is-primary card">-->
+<!--                    <div class="message-header"></div>-->
+<!--                    <div class="message-body"></div>-->
+<!--                </article>-->
+<!--            </div>-->
+<!--            <div class="column is-narrow ">-->
+<!--                <article class="message is-primary card">-->
+<!--                    <div class="message-header"></div>-->
+<!--                    <div class="message-body"></div>-->
+<!--                </article>-->
+<!--            </div>-->
+<!--            <div class="column is-narrow ">-->
+<!--                <article class="message is-primary card">-->
+<!--                    <div class="message-header">test</div>-->
+<!--                    <div class="message-body">test b</div>-->
+<!--                </article>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 </section>
 
 
@@ -410,60 +410,60 @@
 <!--<script defer src="db.js"/>-->
 <script>
 
-    function msToTime(duration) {
-        var milliseconds = Math.floor((duration % 1000) / 100),
-            seconds = Math.floor((duration / 1000) % 60),
-            minutes = Math.floor((duration / (1000 * 60)) % 60),
-            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+    // function msToTime(duration) {
+    //     var milliseconds = Math.floor((duration % 1000) / 100),
+    //         seconds = Math.floor((duration / 1000) % 60),
+    //         minutes = Math.floor((duration / (1000 * 60)) % 60),
+    //         hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+    //
+    //     hours = (hours < 10) ? "0" + hours : hours;
+    //     minutes = (minutes < 10) ? "0" + minutes : minutes;
+    //     seconds = (seconds < 10) ? "0" + seconds : seconds;
+    //
+    //     return hours + "hrs, " + minutes + "mins"; // " + seconds + "." + milliseconds;
+    // }
 
-        hours = (hours < 10) ? "0" + hours : hours;
-        minutes = (minutes < 10) ? "0" + minutes : minutes;
-        seconds = (seconds < 10) ? "0" + seconds : seconds;
-
-        return hours + "hrs, " + minutes + "mins"; // " + seconds + "." + milliseconds;
-    }
-
-    var openSeaCallback = function (responseText) {
-        var json = JSON.parse(responseText);
-        var assetArray = json['asset_events'];
-       // console.log(assetArray);
-        var articles = document.getElementsByTagName("article");
-        for (var i = 0; i < assetArray.length; i++) {
-            var asset = assetArray[i];
-            // console.log(asset['asset']['permalink']);
-            // console.log(asset['asset']['permalink']);
-            // console.log(asset['transaction']['transaction_hash']);
-            // console.log(asset['transaction']['timestamp']);
-            // console.log(asset['total_price'] / 1000000000000000000); // 1000000000000000000
-            var timestamp = asset['transaction']['timestamp'];
-            var transactionTime = new Date(timestamp + 'z');
-            const millis = Date.now() - transactionTime;
-            // console.log(msToTime(millis));
-            // console.log("Date " + transactionTime);
-            articles[i].getElementsByClassName("message-header").item(0).innerHTML = "<b>" + asset['total_price'] / 1000000000000000000 + 'Ξ </b>&nbsp;&nbsp;&nbsp;' + msToTime(millis) + " ago";
-            const itemLink = asset['asset']['permalink'];
-            articles[i].getElementsByClassName("message-body").item(0).innerHTML = "<a href='" + itemLink + "'> View Item </a>";
-        }
-
-
-    }
-
-    var latestSales = function (n, callback) {
-        const url = "https://api.opensea.io/api/v1/events?asset_contract_address=0xd70f41dd5875eee7fa9dd8048567bc932124a8d2&event_type=successful&only_opensea=false&offset=0&limit=" + n;
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function () {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                callback(xmlHttp.responseText);
-        }
-        xmlHttp.open("GET", url, true); // true for asynchronous
-        xmlHttp.send(null);
-    }
-    latestSales(6, openSeaCallback);
-
-    setInterval(function () {
-        // console.log("about to ht ope");
-        latestSales(5, openSeaCallback);
-    }, 90 * 1000); // 60 * 1000 milsec
+    // var openSeaCallback = function (responseText) {
+    //     var json = JSON.parse(responseText);
+    //     var assetArray = json['asset_events'];
+    //    // console.log(assetArray);
+    //     var articles = document.getElementsByTagName("article");
+    //     for (var i = 0; i < assetArray.length; i++) {
+    //         var asset = assetArray[i];
+    //         // console.log(asset['asset']['permalink']);
+    //         // console.log(asset['asset']['permalink']);
+    //         // console.log(asset['transaction']['transaction_hash']);
+    //         // console.log(asset['transaction']['timestamp']);
+    //         // console.log(asset['total_price'] / 1000000000000000000); // 1000000000000000000
+    //         var timestamp = asset['transaction']['timestamp'];
+    //         var transactionTime = new Date(timestamp + 'z');
+    //         const millis = Date.now() - transactionTime;
+    //         // console.log(msToTime(millis));
+    //         // console.log("Date " + transactionTime);
+    //         articles[i].getElementsByClassName("message-header").item(0).innerHTML = "<b>" + asset['total_price'] / 1000000000000000000 + 'Ξ </b>&nbsp;&nbsp;&nbsp;' + msToTime(millis) + " ago";
+    //         const itemLink = asset['asset']['permalink'];
+    //         articles[i].getElementsByClassName("message-body").item(0).innerHTML = "<a href='" + itemLink + "'> View Item </a>";
+    //     }
+    //
+    //
+    // }
+    //
+    // var latestSales = function (n, callback) {
+    //     const url = "https://api.opensea.io/api/v1/events?asset_contract_address=0xd70f41dd5875eee7fa9dd8048567bc932124a8d2&event_type=successful&only_opensea=false&offset=0&limit=" + n;
+    //     var xmlHttp = new XMLHttpRequest();
+    //     xmlHttp.onreadystatechange = function () {
+    //         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+    //             callback(xmlHttp.responseText);
+    //     }
+    //     xmlHttp.open("GET", url, true); // true for asynchronous
+    //     xmlHttp.send(null);
+    // }
+    // latestSales(6, openSeaCallback);
+    //
+    // setInterval(function () {
+    //     // console.log("about to ht ope");
+    //     latestSales(5, openSeaCallback);
+    // }, 90 * 1000); // 60 * 1000 milsec
 
 
 </script>
